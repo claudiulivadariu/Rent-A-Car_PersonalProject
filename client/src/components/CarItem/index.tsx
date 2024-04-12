@@ -22,6 +22,7 @@ export interface ICar {
     price: string;
     type: CarType;
     image: string;
+    sale?: number;
     data: {
         seats: number;
         transmission: TransmissionType;
@@ -34,6 +35,7 @@ const GradientButton = styled(Button)({
     border: 0,
     borderRadius: 8,
     color: "white",
+    maxHeight: "40px",
     padding: "8px 12px",
     boxShadow: "0 3px 5px 2px rgba(0, 0, 0, .3)",
     transition: "background-color 0.3s",
@@ -42,7 +44,8 @@ const GradientButton = styled(Button)({
     },
 });
 
-export const CarItem = ({ price, type, image, data }: ICar) => {
+export const CarItem = (props: ICar) => {
+    const { image, type, data, price } = props;
     return (
         <div className="bg-white shadow-lg rounded-lg overflow-hidden m-4 w-full max-w-[20rem]">
             <div className="h-[15rem] flex items-center">
@@ -53,9 +56,20 @@ export const CarItem = ({ price, type, image, data }: ICar) => {
                 <p className="text-gray-700 mb-2">
                     {data.fuel} | {data.transmission} | {data.seats} seats
                 </p>
-                <div className="flex justify-between">
-                    <p className="text-gray-800 text-lg font-semibold flex items-center">{price}</p>
-                    <GradientButton variant="outlined">View deal!</GradientButton>
+                <div className="flex justify-between items-center">
+                    <p className="text-gray-800 text-lg font-semibold flex items-center">
+                        {props.sale ? (
+                            <div>
+                                <p className="text-red-500 line-through">${props.price} </p>
+                                <p>${(props.sale * (100 - Number(price))) / 100}</p>
+                            </div>
+                        ) : (
+                            `$${price}`
+                        )}
+                    </p>
+                    <GradientButton variant="contained" className="items-center ">
+                        View deal!
+                    </GradientButton>
                 </div>
             </div>
         </div>
