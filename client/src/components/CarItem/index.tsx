@@ -1,0 +1,63 @@
+import Button from "@mui/material/Button";
+import { styled } from "@mui/system";
+
+/* eslint-disable react-refresh/only-export-components */
+export enum CarType {
+    "small" = "Small",
+    "family" = "Family",
+    "VIP" = "VIP",
+    "supercar" = "Super Car",
+}
+export enum TransmissionType {
+    "manual" = "Manual",
+    "automatic" = "Automatic",
+}
+export enum FuelType {
+    "diesel" = "Diesel",
+    "petrol" = "Petrol",
+    "LPG" = "LPG",
+}
+
+export interface ICar {
+    price: string;
+    type: CarType;
+    image: string;
+    data: {
+        seats: number;
+        transmission: TransmissionType;
+        fuel: FuelType;
+    };
+}
+
+const GradientButton = styled(Button)({
+    background: "linear-gradient(45deg, #4CAF50, #2E7D32)",
+    border: 0,
+    borderRadius: 8,
+    color: "white",
+    padding: "8px 12px",
+    boxShadow: "0 3px 5px 2px rgba(0, 0, 0, .3)",
+    transition: "background-color 0.3s",
+    "&:hover": {
+        background: "linear-gradient(45deg, #2E7D32, #4CAF50)",
+    },
+});
+
+export const CarItem = ({ price, type, image, data }: ICar) => {
+    return (
+        <div className="bg-white shadow-lg rounded-lg overflow-hidden m-4 w-full max-w-[20rem]">
+            <div className="h-[15rem] flex items-center">
+                <img src={image} alt={type} className="w-full h-auto" />
+            </div>
+            <div className="p-4">
+                <h2 className="text-xl font-semibold mb-2">{type}</h2>
+                <p className="text-gray-700 mb-2">
+                    {data.fuel} | {data.transmission} | {data.seats} seats
+                </p>
+                <div className="flex justify-between">
+                    <p className="text-gray-800 text-lg font-semibold flex items-center">{price}</p>
+                    <GradientButton variant="outlined">View deal!</GradientButton>
+                </div>
+            </div>
+        </div>
+    );
+};

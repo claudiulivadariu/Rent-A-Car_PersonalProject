@@ -1,5 +1,5 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { FirstPage } from "./pages/first-page";
+import { Cars } from "./pages/Cars";
 import App from "./pages/root/App";
 
 const Root = () => {
@@ -9,8 +9,8 @@ const Root = () => {
             element: <App />,
             children: [
                 {
-                    path: "first-page",
-                    element: <FirstPage />,
+                    path: "cars",
+                    element: <Cars />,
                     // loader: teamLoader,
                 },
             ],
