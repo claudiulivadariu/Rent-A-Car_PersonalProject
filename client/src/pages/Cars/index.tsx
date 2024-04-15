@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { CarType, FuelType, ICar, TransmissionType } from "../../components/CarItem";
 import { CarItem } from "../../components/CarItem";
-import { Checkbox } from "@mui/material";
+import { Checkbox, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { common } from "@mui/material/colors";
+import { styled } from "@mui/material/styles";
+import MuiInput from "@mui/material/Input";
 import Slider from "@mui/material/Slider";
 import Box from "@mui/material/Box";
 
@@ -16,6 +18,11 @@ const transmissionTypes = Object.values(TransmissionType).filter((item) => {
 const fuelTypes = Object.values(FuelType).filter((item) => {
     return isNaN(Number(item));
 });
+
+const Input = styled(MuiInput)`
+    width: 72px;
+    color: white;
+`;
 
 export const Cars = () => {
     const [cars] = useState<Array<ICar>>([
@@ -270,6 +277,7 @@ export const Cars = () => {
                 transmission: TransmissionType.Manual,
                 seats: 4,
             },
+            sale: 50,
         },
         {
             price: "89",
@@ -379,6 +387,16 @@ export const Cars = () => {
         sale: [],
     });
     const [price, setPrice] = useState<number[]>([30, 157]);
+    const [selectedSort, setSelectedSort] = useState<string>("default");
+
+    const sortFunction = (a: ICar, b: ICar) => {
+        if (selectedSort === "default") return 0;
+        else if (selectedSort === "price") {
+            const priceA = a.sale ? Number(a.price) - (a.sale * Number(a.price)) / 100 : Number(a.price);
+            const priceB = b.sale ? Number(b.price) - (b.sale * Number(b.price)) / 100 : Number(b.price);
+            return priceA - priceB;
+        } else return 0;
+    };
 
     const handleFilterToggle = (filterCategory: string, value: string) => {
         setFilters((prevFilters) => {
@@ -404,14 +422,36 @@ export const Cars = () => {
             (!filters.sale.length || (car.sale !== undefined && filters.sale.includes(car.sale.toString())))
         );
     };
+    const handleChangeMinPrice = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const newPrice: number[] = [...price];
+        newPrice[0] = Number(event.target.value);
+        setPrice(newPrice);
+    };
+    const handleChangeMaxPrice = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const newPrice: number[] = [...price];
+        newPrice[1] = Number(event.target.value);
+        setPrice(newPrice);
+    };
+
+    const handleBlur = () => {
+        if (price[0] < 0) {
+            const newPrice = [...price];
+            newPrice[0] = 0;
+            setPrice([...newPrice]);
+        } else if (price[1] > 250) {
+            const newPrice = [...price];
+            newPrice[1] = 250;
+            setPrice([...newPrice]);
+        }
+    };
 
     return (
         <div className="flex flex-wrap justify-center w-full h-full">
-            <div className="text-white md:w-[300px] bg-gray-700 items-start h-[24rem] md:m-4 md:mr-0  rounded-xl overflow-auto w-full mx-10 mt-4 z-0">
+            <div className="text-white md:w-[300px] bg-gray-700 items-start  md:m-4 md:mr-0 h-fit rounded-xl overflow-auto w-full mx-10 mt-4 z-0 font">
                 <h1 className="text-center mt-5 font-bold">Filters</h1>
                 <div className="px-4">
                     <div content="Car Types">
-                        <h2 className="pl-5 border-b-2 font-thin">Car Types</h2>
+                        <h2 className="pl-5 border-b-2 font-thin mb-2">Car Types</h2>
                         <div className="ml-2 font-thin">
                             {carTypes.map((type, index) => (
                                 <div className="flex items-center" key={index}>
@@ -432,7 +472,7 @@ export const Cars = () => {
                         </div>
                     </div>
                     <div content="Fuel">
-                        <h2 className="pl-5 border-b-2 font-thin">Fuel</h2>
+                        <h2 className="pl-5 border-b-2 font-thin  mb-2">Fuel</h2>
                         <div className="ml-2 font-thin">
                             {fuelTypes.map((type, index) => (
                                 <div className="flex items-center" key={index}>
@@ -453,7 +493,7 @@ export const Cars = () => {
                         </div>
                     </div>
                     <div content="Transmissions">
-                        <h2 className="pl-5 border-b-2 font-thin">Transmissions</h2>
+                        <h2 className="pl-5 border-b-2 font-thin mb-2">Transmissions</h2>
                         <div className="ml-2 font-thin">
                             {transmissionTypes.map((type, index) => (
                                 <div className="flex items-center" key={index}>
@@ -473,20 +513,64 @@ export const Cars = () => {
                             ))}
                         </div>
                     </div>
-                    <div className="Price">
-                        <h2 className="pl-5 border-b-2 font-thin">Price</h2>
-                        <div className=" items-center flex justify-end">
-                            <Box sx={{ width: 200 }}>
-                                <Slider
-                                    getAriaLabel={() => "Price range"}
-                                    min={10}
-                                    max={250}
-                                    value={price}
-                                    onChange={handleChangePrice}
-                                    valueLabelDisplay="auto"
+                    <div content="Price">
+                        <h2 className="pl-5 border-b-[2px] pb-2 font-thin">Price Range</h2>
+                        <div className=" items-center flex flex-col">
+                            <div className="">
+                                <Box sx={{ width: 250 }}>
+                                    <Slider
+                                        getAriaLabel={() => "Price range"}
+                                        min={10}
+                                        max={250}
+                                        value={price}
+                                        onChange={handleChangePrice}
+                                        valueLabelDisplay="auto"
+                                    />
+                                </Box>
+                            </div>
+
+                            <div className="flex justify-evenly w-full pb-4">
+                                <span className="pr-2">Min Price:</span>
+                                <Input
+                                    value={price[0]}
+                                    onChange={handleChangeMinPrice}
+                                    className="border-[1px] px-4"
+                                    inputProps={{
+                                        type: "number",
+                                        "aria-labelledby": "input-slider",
+                                    }}
                                 />
-                            </Box>
+                                <span className="px-2">Max price:</span>
+                                <Input
+                                    value={price[1]}
+                                    className="border-[1px] px-4"
+                                    onChange={handleChangeMaxPrice}
+                                    onBlur={handleBlur}
+                                    inputProps={{
+                                        type: "number",
+                                        "aria-labelledby": "input-slider",
+                                    }}
+                                />
+                            </div>
                         </div>
+                    </div>
+                    <div content="Sort">
+                        <h2 className="pl-5 border-b-2 font-thin mb-2">Sort</h2>
+                        <Box sx={{ minWidth: 150, paddingBottom: 2 }}>
+                            <FormControl fullWidth>
+                                <InputLabel id="demo-simple-select-label"></InputLabel>
+                                <Select
+                                    className="border-white bg-white"
+                                    value={selectedSort}
+                                    onChange={(event) => {
+                                        setSelectedSort(event.target.value as string);
+                                    }}
+                                >
+                                    <MenuItem value={"default"}>Default</MenuItem>
+                                    <MenuItem value={"price"}>By price</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Box>
                     </div>
                 </div>
             </div>
@@ -494,6 +578,7 @@ export const Cars = () => {
                 {cars
                     .filter(filterCars)
                     .filter((car) => Number(car.price) >= price[0] && Number(car.price) <= price[1])
+                    .sort(sortFunction)
                     .map((car, index) => (
                         <CarItem
                             key={index}

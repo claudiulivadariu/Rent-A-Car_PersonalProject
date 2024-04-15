@@ -19,7 +19,7 @@ const Navbar = () => {
 
     return (
         <div className="bg-gray-700 flex md:justify-evenly justify-between items-center h-20 mx-auto px-4 text-white">
-            <img src={logo} className="w-40 h-10"></img>
+            <img src={logo} className="w-30 h-8"></img>
             <ul className="hidden md:flex">
                 {navItems.map((item) => (
                     <li

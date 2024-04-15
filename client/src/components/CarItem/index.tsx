@@ -59,9 +59,9 @@ export const CarItem = (props: ICar) => {
                 <div className="flex justify-between items-center">
                     <p className="text-gray-800 text-lg font-semibold flex items-center">
                         {props.sale ? (
-                            <div>
-                                <p className="text-red-500 line-through">${props.price} </p>
-                                <p>${Number(price) - (props.sale * Number(price)/100)}</p>
+                            <div className="flex flex-row">
+                                <span className="line-through pr-3">${props.price} </span>
+                                <span className="text-red-500">${Number(price) - (props.sale * Number(price)/100)}</span>
                             </div>
                         ) : (
                             `$${price}`

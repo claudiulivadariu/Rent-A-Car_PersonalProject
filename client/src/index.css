@@ -5,3 +5,38 @@
 text {
   color: rgb(246,247,249)
 }
+
+h1 {
+  margin: 0;
+  font-family: "Roboto","Helvetica","Arial",sans-serif;
+  font-weight: 600;
+  font-size: 1.4rem;
+  line-height: 1.5;
+  letter-spacing: 0.00938em;
+  margin-bottom: 0.35em;
+}
+h2 {
+  margin: 0;
+  font-family: "Roboto","Helvetica","Arial",sans-serif;
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.5;
+  letter-spacing: 0.00938em;
+  margin-bottom: 0.35em;
+}
+p {
+    font-size: 0.8rem;
+    line-height: 1.6;
+    letter-spacing: 0;
+    font-family: "IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+    font-weight: 400;
+    scroll-snap-margin-top: calc(var(--MuiDocs-header-height) + 32px);
+    scroll-margin-top: calc(var(--MuiDocs-header-height) + 32px);
+    word-break: break-word;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
