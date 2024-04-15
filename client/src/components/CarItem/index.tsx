@@ -3,18 +3,18 @@ import { styled } from "@mui/system";
 
 /* eslint-disable react-refresh/only-export-components */
 export enum CarType {
-    "small" = "Small",
-    "family" = "Family",
+    "Small" = "Small",
+    "Family" = "Family",
     "VIP" = "VIP",
-    "supercar" = "Super Car",
+    "Super Car" = "Super Car",
 }
 export enum TransmissionType {
-    "manual" = "Manual",
-    "automatic" = "Automatic",
+    "Manual" = "Manual",
+    "Automatic" = "Automatic",
 }
 export enum FuelType {
-    "diesel" = "Diesel",
-    "petrol" = "Petrol",
+    "Diesel" = "Diesel",
+    "Petrol" = "Petrol",
     "LPG" = "LPG",
 }
 
@@ -49,7 +49,7 @@ export const CarItem = (props: ICar) => {
     return (
         <div className="bg-white shadow-lg rounded-lg overflow-hidden m-4 w-full max-w-[20rem]">
             <div className="h-[15rem] flex items-center">
-                <img src={image} alt={type} className="w-full h-auto" />
+                <img src={image} alt={type} className="w-full h-auto max-h-[260px]" />
             </div>
             <div className="p-4">
                 <h2 className="text-xl font-semibold mb-2">{type}</h2>
@@ -61,7 +61,7 @@ export const CarItem = (props: ICar) => {
                         {props.sale ? (
                             <div>
                                 <p className="text-red-500 line-through">${props.price} </p>
-                                <p>${(props.sale * (100 - Number(price))) / 100}</p>
+                                <p>${Number(price) - (props.sale * Number(price)/100)}</p>
                             </div>
                         ) : (
                             `$${price}`
