@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { CarType, FuelType, ICar, TransmissionType } from "../../components/CarItem";
 import { CarItem } from "../../components/CarItem";
-import { Checkbox, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { Button, Checkbox, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { common } from "@mui/material/colors";
 import { styled } from "@mui/material/styles";
 import MuiInput from "@mui/material/Input";
@@ -27,13 +27,13 @@ const Input = styled(MuiInput)`
 export const Cars = () => {
     const [cars] = useState<Array<ICar>>([
         {
-            price: "30",
-            type: CarType.Small,
-            image: "https://www.budget.com/content/dam/cars/l/2018/smart/2018-smart-fortwo-electric-drive-prime-coupe-micro-car-black.png",
+            price: "250",
+            type: CarType["Super Car"],
+            image: "https://m.atcdn.co.uk/a/media/w375/a1cf0fc710e040a2893418c67edd9a9b.jpg",
             data: {
-                fuel: FuelType.Diesel,
-                transmission: TransmissionType.Manual,
-                seats: 6,
+                fuel: FuelType.Petrol,
+                transmission: TransmissionType.Automatic,
+                seats: 5,
             },
         },
 
@@ -386,7 +386,7 @@ export const Cars = () => {
         fuelType: [],
         sale: [],
     });
-    const [price, setPrice] = useState<number[]>([30, 157]);
+    const [price, setPrice] = useState<number[]>([30, 250]);
     const [selectedSort, setSelectedSort] = useState<string>("default");
 
     const sortFunction = (a: ICar, b: ICar) => {
@@ -571,6 +571,18 @@ export const Cars = () => {
                                 </Select>
                             </FormControl>
                         </Box>
+                    </div>
+                    <div content="Reset" className="pb-4 flex justify-center">
+                        <Button variant="contained" className="!bg-green-600" onClick={() => {
+                            setFilters({
+                                carType: [],
+                                transmissionType: [],
+                                fuelType: [],
+                                sale: [],
+                            });
+                            setPrice([30,250]);
+                            setSelectedSort('default');
+                        }}>Reset all filters!</Button>
                     </div>
                 </div>
             </div>

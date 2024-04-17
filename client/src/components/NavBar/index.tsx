@@ -10,7 +10,7 @@ const Navbar = () => {
         setNav(!nav);
     };
     const navItems = [
-        { id: 1, text: "Home", link: "/" },
+        { id: 1, text: "Home", link: "/home" },
         { id: 2, text: "Company", link: "#" },
         { id: 3, text: "Cars", link: "/cars" },
         { id: 4, text: "Rental Conditions", link: "#" },
