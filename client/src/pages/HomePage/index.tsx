@@ -1,6 +1,6 @@
 import React from "react";
 import RentACarForm from "../../components/RentACarForm";
-import backgroundImage from "../../assets/home-bg-image.png";
+import backgroundImage from "../../assets/home-bg-image-4.png";
 import { CheckCircle } from "react-feather";
 import StarRatings from "react-star-ratings";
 
@@ -8,19 +8,20 @@ const HomePage: React.FC = () => {
     return (
         <>
             <div className="flex flex-col w-full h-full">
-                <div className="flex-grow flex">
+                <div className="flex-grow flex justify-center items-center bg-slate-800">
                     <div
                         className="w-full md:p-0 p-8"
                         style={{
                             background: `url(${backgroundImage})`,
                             backgroundRepeat: "no-repeat",
-                            backgroundSize: "100% 100%",
+                            backgroundSize: "45% 100%",
+                            backgroundPosition:'center',
                         }}
                     >
                         <RentACarForm />
                     </div>
                 </div>
-                <div className="w-full flex lg:justify-center lg:flex-row flex-col">
+                <div className="w-full flex lg:justify-center lg:flex-row flex-col bg-slate-200">
                     <div
                         className="!text-slate-600 bg-slate-100 lg:w-1/4 p-8 m-10 rounded-2xl"
                         content="why-us?"
@@ -43,6 +44,10 @@ const HomePage: React.FC = () => {
                                 <li className="flex">
                                     <CheckCircle className="text-green-500 mr-2" />
                                     <h2>No deposit, no excess option</h2>
+                                </li>
+                                <li className="flex">
+                                    <CheckCircle className="text-green-500 mr-2" />
+                                    <h2>No credit car required</h2>
                                 </li>
                             </ul>
                         </div>
@@ -71,9 +76,9 @@ const HomePage: React.FC = () => {
                         </div>
                     </div>
                 </div>
-                <div className="bg-white">
+                <div className="bg-slate-100">
                     <h1 className="text-center text-5xl pt-8 !text-slate-600">Multiple cars to choose from!</h1>
-                    <div className="car-container pb-4">
+                    <div className="pb-4 flex items-center justify-center flex-col md:flex-row">
                         <div className="car">
                             <img
                                 src="https://static.vecteezy.com/system/resources/previews/019/142/818/non_2x/modern-car-isolated-on-transparent-background-3d-rendering-illustration-free-png.png"

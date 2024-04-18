@@ -447,7 +447,7 @@ export const Cars = () => {
 
     return (
         <div className="flex flex-wrap justify-center w-full h-full">
-            <div className="text-white md:w-[300px] bg-gray-700 items-start  md:m-4 md:mr-0 h-fit rounded-xl overflow-auto w-full mx-10 mt-4 z-0 font">
+            <div className="md:w-[300px] bg-slate-700 items-start  md:m-4 md:mr-0 h-fit rounded-xl overflow-auto w-full mx-10 mt-4 z-0 font text-slate-200">
                 <h1 className="text-center mt-5 font-bold">Filters</h1>
                 <div className="px-4">
                     <div content="Car Types">

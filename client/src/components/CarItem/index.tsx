@@ -49,26 +49,26 @@ export const CarItem = (props: ICar) => {
     return (
         <div className="bg-white shadow-lg rounded-lg overflow-hidden m-4 w-full max-w-[20rem]">
             <div className="h-[15rem] flex items-center">
-                <img src={image} alt={type} className="w-full h-auto max-h-[260px]" />
+                <img src={image} alt={type} className="w-full h-auto max-h-[260px] p-4 mt-10 rounded-3xl rounded-t-3xl" />
             </div>
             <div className="p-4">
                 <h2 className="text-xl font-semibold mb-2">{type}</h2>
                 <div className="flex space-x-2">
                     <div className="flex">
                         <span className="icon-[solar--transmission-circle-bold-duotone] w-[1.5rem] h-[1.5rem] items-center text-slate-600"></span>
-                        <p className="text-gray-700 pt-[2px]">{data.transmission}</p>
+                        <p className="text-slate-700 pt-[2px]">{data.transmission}</p>
                     </div>
                     <div className="flex">
                         <span className="icon-[lucide--fuel] w-[1.5rem] h-[1.5rem] items-center text-slate-500 mr-1"></span>
-                        <p className="text-gray-700 pt-[2px]">{data.fuel}</p>
+                        <p className="text-slate-700 pt-[2px]">{data.fuel}</p>
                     </div>
                     <div className="flex">
                         <span className="icon-[material-symbols--person-outline] w-[1.5rem] h-[1.5rem] items-center text-slate-600"></span>
-                        <p className="text-gray-700 pt-[2px]">{data.seats}</p>
+                        <p className="text-slate-700 pt-[2px]">{data.seats}</p>
                     </div>
                 </div>
                 <div className="flex justify-between items-center">
-                    <p className="text-gray-800 text-lg font-semibold flex items-center">
+                    <p className="text-slate-800 text-lg font-semibold flex items-center">
                         {props.sale ? (
                             <div className="flex flex-row">
                                 <span className="line-through pr-3">${props.price} </span>

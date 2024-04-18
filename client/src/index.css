@@ -52,11 +52,6 @@ input[type=number]::-webkit-outer-spin-button {
   margin-top: auto;
 }
 
-.car-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 
 .car {
   width: 250px;

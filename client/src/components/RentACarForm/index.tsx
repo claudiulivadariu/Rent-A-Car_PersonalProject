@@ -18,15 +18,17 @@ const locations = [
     { value: "iasi_iulius_mall", label: "Iasi, Iulius Mall" },
 ];
 
-const carTypes = ["Small", "Family", "VIP", "Super Car", "ANY"];
+const carTypes = ["Any", "Small", "Family", "VIP", "Super Car"];
 
 function RentACarForm() {
     const [pickupLocation, setPickupLocation] = useState("");
     const [dropOffLocation, setDropOffLocation] = useState("");
     const [useSameLocation, setUseSameLocation] = useState(false);
-    const [carType, setCarType] = useState("");
-    const [pickupDate, setPickupDate] = useState("");
-    const [dropOffDate, setDropOffDate] = useState("");
+    const [carType, setCarType] = useState("Any");
+    const [pickupDate, setPickupDate] = useState(new Date().toISOString().split("T")[0]);
+    const [dropOffDate, setDropOffDate] = useState(
+        new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000).toISOString().split("T")[0]
+    );
     const [driverAge, setDriverAge] = useState("");
 
     const handleCheckboxChange = (event: any) => {
