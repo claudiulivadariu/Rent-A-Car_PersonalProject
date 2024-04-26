@@ -68,7 +68,7 @@ export const CarItem = (props: ICar) => {
                     </div>
                 </div>
                 <div className="flex justify-between items-center">
-                    <p className="text-slate-800 text-lg font-semibold flex items-center">
+                    <div className="text-slate-800 text-lg font-semibold flex items-center">
                         {props.sale ? (
                             <div className="flex flex-row">
                                 <span className="line-through pr-3">${props.price} </span>
@@ -81,7 +81,7 @@ export const CarItem = (props: ICar) => {
                                 ${price}<span className="text-slate-500">/day</span>
                             </>
                         )}
-                    </p>
+                    </div>
                     <GradientButton variant="contained" className="items-center ">
                         View deal!
                     </GradientButton>

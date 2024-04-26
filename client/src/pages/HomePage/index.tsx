@@ -23,37 +23,37 @@ const HomePage: React.FC = () => {
                 </div>
                 <div className="w-full flex lg:justify-center lg:flex-row flex-col bg-slate-200">
                     <div
-                        className="!text-slate-600 bg-slate-100 lg:w-1/4 p-8 m-10 rounded-2xl"
+                        className="!text-slate-600 bg-slate-100 lg:w-1/4 p-8 m-10 rounded-2xl shadow-xl"
                         content="why-us?"
                     >
                         <h1 className="tex-center flex justify-center">Why rent-a-car-iasi.ro? </h1>
-                        <div className="flex justify-center items-center flex-col">
+                        <div className="flex justify-center items-center flex-col px-2">
                             <ul className="-ml-6">
                                 <li className="flex">
-                                    <CheckCircle className="text-green-500 mr-2" />
+                                    <CheckCircle className="text-green-500 mr-2 h-8 min-h-8 min-w-6 " />
                                     <h2>Avoid insurance surprises sold by third parties</h2>
                                 </li>
                                 <li className="flex">
-                                    <CheckCircle className="text-green-500 mr-2" />
+                                    <CheckCircle className="text-green-500 mr-2 h-8 min-h-8 min-w-6" />
                                     <h2>No additional charges, final price guaranteed</h2>
                                 </li>
                                 <li className="flex">
-                                    <CheckCircle className="text-green-500 mr-2" />
+                                    <CheckCircle className="text-green-500 mr-2 h-8 min-h-8 min-w-6" />
                                     <h2>Best price guaranteed</h2>
                                 </li>
                                 <li className="flex">
-                                    <CheckCircle className="text-green-500 mr-2" />
+                                    <CheckCircle className="text-green-500 mr-2 h-8 min-h-8 min-w-6" />
                                     <h2>No deposit, no excess option</h2>
                                 </li>
                                 <li className="flex">
-                                    <CheckCircle className="text-green-500 mr-2" />
+                                    <CheckCircle className="text-green-500 mr-2 h-8 min-h-8 min-w-6" />
                                     <h2>No credit car required</h2>
                                 </li>
                             </ul>
                         </div>
                     </div>
                     <div
-                        className="!text-slate-600 bg-slate-100 lg:w-1/4 p-8 m-10 rounded-2xl"
+                        className="!text-slate-600 bg-slate-100 lg:w-1/4 p-8 m-10 rounded-2xl shadow-xl"
                         content="why-us?"
                     >
                         <h1 className="tex-center flex justify-center">Who recommends us? </h1>
@@ -66,7 +66,7 @@ const HomePage: React.FC = () => {
                             Based on these reviews, we have achieved a <span className="font-bold">4.6</span>{" "}
                             rating on <span className="font-bold">Google Reviews! </span>
                         </h2>
-                        <div className="flex w-full justify-center">
+                        <div className="flex w-full justify-center lg:pt-6">
                             <StarRatings
                                 rating={4.6}
                                 starDimension="30px"
@@ -78,7 +78,7 @@ const HomePage: React.FC = () => {
                 </div>
                 <div className="bg-slate-100">
                     <h1 className="text-center text-5xl pt-8 !text-slate-600">Multiple cars to choose from!</h1>
-                    <div className="pb-4 flex items-center justify-center flex-col md:flex-row">
+                    <div className="pb-4 flex items-center justify-center flex-col md:flex-row space-x-[60px]">
                         <div className="car">
                             <img
                                 src="https://static.vecteezy.com/system/resources/previews/019/142/818/non_2x/modern-car-isolated-on-transparent-background-3d-rendering-illustration-free-png.png"

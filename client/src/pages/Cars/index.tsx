@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { CarType, FuelType, ICar, TransmissionType } from "../../components/CarItem";
 import { CarItem } from "../../components/CarItem";
@@ -386,17 +387,27 @@ export const Cars = () => {
         fuelType: [],
         sale: [],
     });
-    const [price, setPrice] = useState<number[]>([30, 250]);
+    const getPrice = (a: ICar) => {
+        return a.sale ? Number(a.price) - (a.sale * Number(a.price)) / 100 : Number(a.price);
+    };
     const [selectedSort, setSelectedSort] = useState<string>("default");
 
     const sortFunction = (a: ICar, b: ICar) => {
         if (selectedSort === "default") return 0;
         else if (selectedSort === "price") {
-            const priceA = a.sale ? Number(a.price) - (a.sale * Number(a.price)) / 100 : Number(a.price);
-            const priceB = b.sale ? Number(b.price) - (b.sale * Number(b.price)) / 100 : Number(b.price);
+            const priceA = getPrice(a);
+            const priceB = getPrice(b);
             return priceA - priceB;
         } else return 0;
     };
+    const filteredCars = cars.sort((a, b) => sortFunction(a, b));
+    const prices = filteredCars.map((car) => getPrice(car));
+    const _MIN_PRICE = Math.min(...prices);
+    const _MAX_PRICE = Math.max(...prices);
+    const [price, setPrice] = useState<{ minPrice: number; maxPrice: number }>({
+        minPrice: _MIN_PRICE,
+        maxPrice: _MAX_PRICE,
+    });
 
     const handleFilterToggle = (filterCategory: string, value: string) => {
         setFilters((prevFilters) => {
@@ -411,9 +422,13 @@ export const Cars = () => {
             return updatedFilters;
         });
     };
-    const handleChangePrice = (event: Event, newValue: number | number[]) => {
-        setPrice(newValue as number[]);
+    const handleChangePrice = (_event: any, newValue: any) => {
+        if (Array.isArray(newValue)) {
+            const [minPrice, maxPrice] = newValue.map((val) => (val === "" ? undefined : val));
+            setPrice({ minPrice, maxPrice });
+        }
     };
+
     const filterCars = (car: ICar): boolean => {
         return (
             (!filters.carType.length || filters.carType.includes(car.type)) &&
@@ -423,25 +438,17 @@ export const Cars = () => {
         );
     };
     const handleChangeMinPrice = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const newPrice: number[] = [...price];
-        newPrice[0] = Number(event.target.value);
-        setPrice(newPrice);
+        setPrice({ minPrice: Number(event.target.value), maxPrice: price.maxPrice });
     };
     const handleChangeMaxPrice = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const newPrice: number[] = [...price];
-        newPrice[1] = Number(event.target.value);
-        setPrice(newPrice);
+        setPrice({ minPrice: price.maxPrice, maxPrice: Number(event.target.value) });
     };
 
     const handleBlur = () => {
-        if (price[0] < 0) {
-            const newPrice = [...price];
-            newPrice[0] = 0;
-            setPrice([...newPrice]);
-        } else if (price[1] > 250) {
-            const newPrice = [...price];
-            newPrice[1] = 250;
-            setPrice([...newPrice]);
+        if (price.minPrice < _MIN_PRICE) {
+            setPrice({ minPrice: _MIN_PRICE, maxPrice: price.maxPrice });
+        } else if (price.maxPrice < _MAX_PRICE) {
+            setPrice({ minPrice: price.minPrice, maxPrice: _MAX_PRICE });
         }
     };
 
@@ -522,7 +529,7 @@ export const Cars = () => {
                                         getAriaLabel={() => "Price range"}
                                         min={10}
                                         max={250}
-                                        value={price}
+                                        value={[price.minPrice, price.maxPrice]}
                                         onChange={handleChangePrice}
                                         valueLabelDisplay="auto"
                                     />
@@ -532,7 +539,7 @@ export const Cars = () => {
                             <div className="flex justify-evenly w-full pb-4">
                                 <span className="pr-2">Min Price:</span>
                                 <Input
-                                    value={price[0]}
+                                    value={price.minPrice}
                                     onChange={handleChangeMinPrice}
                                     className="border-[1px] px-4"
                                     inputProps={{
@@ -542,7 +549,7 @@ export const Cars = () => {
                                 />
                                 <span className="px-2">Max price:</span>
                                 <Input
-                                    value={price[1]}
+                                    value={price.maxPrice}
                                     className="border-[1px] px-4"
                                     onChange={handleChangeMaxPrice}
                                     onBlur={handleBlur}
@@ -573,23 +580,30 @@ export const Cars = () => {
                         </Box>
                     </div>
                     <div content="Reset" className="pb-4 flex justify-center">
-                        <Button variant="contained" className="!bg-green-600" onClick={() => {
-                            setFilters({
-                                carType: [],
-                                transmissionType: [],
-                                fuelType: [],
-                                sale: [],
-                            });
-                            setPrice([30,250]);
-                            setSelectedSort('default');
-                        }}>Reset all filters!</Button>
+                        <Button
+                            variant="contained"
+                            className="!bg-green-600"
+                            onClick={() => {
+                                setFilters({
+                                    carType: [],
+                                    transmissionType: [],
+                                    fuelType: [],
+                                    sale: [],
+                                });
+                                console.log(_MIN_PRICE);
+                                setPrice({ minPrice: _MIN_PRICE, maxPrice: _MAX_PRICE });
+                                setSelectedSort("default");
+                            }}
+                        >
+                            Reset all filters!
+                        </Button>
                     </div>
                 </div>
             </div>
             <div className="w-full items-center grid h-full max-w-[1000px] grid-flow-row xl:grid-cols-3 justify-center">
                 {cars
                     .filter(filterCars)
-                    .filter((car) => Number(car.price) >= price[0] && Number(car.price) <= price[1])
+                    .filter((car) => getPrice(car) >= price.minPrice && getPrice(car) <= price.maxPrice)
                     .sort(sortFunction)
                     .map((car, index) => (
                         <CarItem

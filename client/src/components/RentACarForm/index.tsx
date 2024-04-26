@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
     Button,
     Grid,
@@ -38,13 +38,18 @@ function RentACarForm() {
         }
     };
 
+    useEffect(() => {
+        if (useSameLocation === true) {
+            setDropOffLocation(pickupLocation);
+        }
+    }, [pickupLocation,useSameLocation]);
+
     const handleSubmit = (event: any) => {
         event.preventDefault();
-        // Handle form submission logic here
     };
 
     return (
-        <form onSubmit={handleSubmit} className="max-w-md mx-auto my-8 bg-slate-100 p-8 rounded-3xl">
+        <form onSubmit={handleSubmit} className="max-w-md mx-auto my-8 bg-white p-8 rounded-3xl">
             <Grid container spacing={2}>
                 <Grid item xs={12}>
                     <FormControl fullWidth>

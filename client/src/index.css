@@ -3,57 +3,57 @@
 @tailwind utilities;
 
 text {
-  color: rgb(246,247,249)
+    color: rgb(246, 247, 249);
 }
 
 h1 {
-  margin: 0;
-  font-family: "Roboto","Helvetica","Arial",sans-serif;
-  font-weight: 600;
-  font-size: 1.4rem;
-  line-height: 1.5;
-  letter-spacing: 0.00938em;
-  margin-bottom: 0.35em;
+    margin: 0;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    font-weight: 600;
+    font-size: 1.4rem;
+    line-height: 1.5;
+    letter-spacing: 0.00938em;
+    margin-bottom: 0.35em;
 }
 h2 {
-  margin: 0;
-  font-family: "Roboto","Helvetica","Arial",sans-serif;
-  font-weight: 400;
-  font-size: 1rem;
-  line-height: 1.5;
-  letter-spacing: 0.00938em;
-  margin-bottom: 0.35em;
+    margin: 0;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 1.5;
+    letter-spacing: 0.00938em;
+    margin-bottom: 0.35em;
 }
 p {
     font-size: 0.8rem;
     line-height: 1.6;
     letter-spacing: 0;
-    font-family: "IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+    font-family: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
+        Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
     font-weight: 400;
     scroll-snap-margin-top: calc(var(--MuiDocs-header-height) + 32px);
     scroll-margin-top: calc(var(--MuiDocs-header-height) + 32px);
     word-break: break-word;
 }
 
-input[type=number]::-webkit-inner-spin-button, 
-input[type=number]::-webkit-outer-spin-button { 
-  -webkit-appearance: none; 
-  margin: 0; 
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
 /* input[type='date']:in-range::-webkit-datetime-edit-year-field,input[type='date']:in-range::-webkit-datetime-edit-month-field,input[type='date']:in-range::-webkit-datetime-edit-day-field,input[type='date']:in-range::-webkit-datetime-edit-text{  color: transparent;} */
 
 .wrapper {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 .Footer {
-  margin-top: auto;
+    margin-top: auto;
 }
 
-
-.car {
+/* .car {
   width: 250px;
   height: 250px;
   margin: 20px;
@@ -66,18 +66,29 @@ input[type=number]::-webkit-outer-spin-button {
   justify-content: center;
   align-items: center;
   transition: all 0.3s ease;
+} */
+.car {
+    border-radius: 30px;
+    background: linear-gradient(225deg, #e6e6e6, #ffffff);
+    box-shadow: -10px 10px 25px #a3a3a3, 30px -30px 45px #ffffff;
+    width: 250px;
+    height: 250px;
+    margin: 20px;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
 }
-
 .car:hover {
-  transform: scale(1.1);
+    transform: scale(1.05);
 }
 
 .car img {
-  width: 150px;
-  height: 100px;
-  object-fit: cover;
-  border-radius: 10%;
-  margin-bottom: 15px;
+    width: 150px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 10%;
+    margin-bottom: 15px;
 }
-
-
