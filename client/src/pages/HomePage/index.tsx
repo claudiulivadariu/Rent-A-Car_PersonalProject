@@ -3,8 +3,10 @@ import RentACarForm from "../../components/RentACarForm";
 import backgroundImage from "../../assets/home-bg-image-4.png";
 import { CheckCircle } from "react-feather";
 import StarRatings from "react-star-ratings";
+import { useNavigate } from "react-router-dom";
 
 const HomePage: React.FC = () => {
+    const navigate = useNavigate();
     return (
         <>
             <div className="flex flex-col w-full h-full">
@@ -15,7 +17,7 @@ const HomePage: React.FC = () => {
                             background: `url(${backgroundImage})`,
                             backgroundRepeat: "no-repeat",
                             backgroundSize: "45% 100%",
-                            backgroundPosition:'center',
+                            backgroundPosition: "center",
                         }}
                     >
                         <RentACarForm />
@@ -77,33 +79,47 @@ const HomePage: React.FC = () => {
                     </div>
                 </div>
                 <div className="bg-slate-100">
-                    <h1 className="text-center text-5xl pt-8 !text-slate-600">Multiple cars to choose from!</h1>
-                    <div className="pb-4 flex items-center justify-center flex-col md:flex-row space-x-[60px]">
-                        <div className="car">
+                    <h1 className="text-center text-5xl pt-8 !text-slate-600">
+                        Multiple cars to choose from!
+                    </h1>
+                    <div className="pb-4 lg:flex lg:items-center lg:justify-center lg:flex-row lg:space-x-[60px] grid sm:grid-cols-2 xs:grid-cols-1 place-items-center">
+                        <div className="car cursor-pointer">
                             <img
                                 src="https://static.vecteezy.com/system/resources/previews/019/142/818/non_2x/modern-car-isolated-on-transparent-background-3d-rendering-illustration-free-png.png"
                                 alt="Small Car"
+                                onClick={() => {
+                                    navigate('/cars', { state: { carType: 'Small' } })
+                                }}
                             />
                             <h2>Small Car</h2>
                         </div>
-                        <div className="car">
+                        <div className="car cursor-pointer">
                             <img
                                 src="https://www.pacificcarrentals.com/wp-content/uploads/2021/11/Luxury-Fullsize-Car.png"
                                 alt="VIP Car"
+                                onClick={() => {
+                                    navigate('/cars', { state: { carType: 'VIP' } })
+                                }}
                             />
                             <h2>VIP Car</h2>
                         </div>
-                        <div className="car">
+                        <div className="car cursor-pointer">
                             <img
                                 src="https://www.pngall.com/wp-content/uploads/8/White-SUV-PNG-Picture.png"
                                 alt="Family Car"
+                                onClick={() => {
+                                    navigate('/cars', { state: { carType: 'Family' } })
+                                }}
                             />
                             <h2>Family Car</h2>
                         </div>
-                        <div className="car">
+                        <div className="car cursor-pointer">
                             <img
                                 src="https://static.vecteezy.com/system/resources/previews/019/612/564/non_2x/sport-car-isolated-on-transparent-background-3d-rendering-illustration-free-png.png"
                                 alt="Super Car"
+                                onClick={() => {
+                                    navigate('/cars', { state: { carType: 'Super Car' } })
+                                }}
                             />
                             <h2>Super Car</h2>
                         </div>
