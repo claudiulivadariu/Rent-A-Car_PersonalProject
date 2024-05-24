@@ -10,7 +10,7 @@ const Navbar = () => {
         setNav(!nav);
     };
     const navItems = [
-        { id: 1, text: "Home", link: "/" },
+        { id: 1, text: "Home", link: "/home" },
         { id: 2, text: "Company", link: "#" },
         { id: 3, text: "Cars", link: "/cars" },
         { id: 4, text: "Rental Conditions", link: "#" },
@@ -18,13 +18,13 @@ const Navbar = () => {
     ];
 
     return (
-        <div className="bg-gray-700 flex md:justify-evenly justify-between items-center h-20 mx-auto px-4 text-white">
+        <div className="bg-slate-800 flex md:justify-evenly justify-between items-center h-16 mx-auto px-4 text-white w-full">
             <img src={logo} className="w-30 h-8"></img>
             <ul className="hidden md:flex">
                 {navItems.map((item) => (
                     <li
                         key={item.id}
-                        className="p-4 hover:bg-[#00df9a] rounded-xl m-2 cursor-pointer duration-300 hover:text-black"
+                        className="p-3 hover:bg-[#00df9a] rounded-xl m-2 cursor-pointer duration-300 hover:text-black"
                         onClick={() => navigate(item.link)}
                     >
                         {item.text}
@@ -44,7 +44,11 @@ const Navbar = () => {
                 {navItems.map((item) => (
                     <li
                         key={item.id}
-                        className="p-4 border-b rounded-xl hover:bg-[#00df9a] duration-300 hover:text-black cursor-pointer border-gray-600"
+                        className="p-4 border-b hover:bg-[#00df9a] duration-300 hover:text-black cursor-pointer border-gray-600"
+                        onClick={() => {
+                            handleNav();
+                            navigate(item.link);
+                        }}
                     >
                         {item.text}
                     </li>

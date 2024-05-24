@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { CarType, FuelType, ICar, TransmissionType } from "../../components/CarItem";
 import { CarItem } from "../../components/CarItem";
-import { Checkbox, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { Button, Checkbox, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { common } from "@mui/material/colors";
 import { styled } from "@mui/material/styles";
 import MuiInput from "@mui/material/Input";
@@ -27,13 +28,13 @@ const Input = styled(MuiInput)`
 export const Cars = () => {
     const [cars] = useState<Array<ICar>>([
         {
-            price: "30",
-            type: CarType.Small,
-            image: "https://www.budget.com/content/dam/cars/l/2018/smart/2018-smart-fortwo-electric-drive-prime-coupe-micro-car-black.png",
+            price: "250",
+            type: CarType["Super Car"],
+            image: "https://m.atcdn.co.uk/a/media/w375/a1cf0fc710e040a2893418c67edd9a9b.jpg",
             data: {
-                fuel: FuelType.Diesel,
-                transmission: TransmissionType.Manual,
-                seats: 6,
+                fuel: FuelType.Petrol,
+                transmission: TransmissionType.Automatic,
+                seats: 5,
             },
         },
 
@@ -386,17 +387,27 @@ export const Cars = () => {
         fuelType: [],
         sale: [],
     });
-    const [price, setPrice] = useState<number[]>([30, 157]);
+    const getPrice = (a: ICar) => {
+        return a.sale ? Number(a.price) - (a.sale * Number(a.price)) / 100 : Number(a.price);
+    };
     const [selectedSort, setSelectedSort] = useState<string>("default");
 
     const sortFunction = (a: ICar, b: ICar) => {
         if (selectedSort === "default") return 0;
         else if (selectedSort === "price") {
-            const priceA = a.sale ? Number(a.price) - (a.sale * Number(a.price)) / 100 : Number(a.price);
-            const priceB = b.sale ? Number(b.price) - (b.sale * Number(b.price)) / 100 : Number(b.price);
+            const priceA = getPrice(a);
+            const priceB = getPrice(b);
             return priceA - priceB;
         } else return 0;
     };
+    const filteredCars = cars.sort((a, b) => sortFunction(a, b));
+    const prices = filteredCars.map((car) => getPrice(car));
+    const _MIN_PRICE = Math.min(...prices);
+    const _MAX_PRICE = Math.max(...prices);
+    const [price, setPrice] = useState<{ minPrice: number; maxPrice: number }>({
+        minPrice: _MIN_PRICE,
+        maxPrice: _MAX_PRICE,
+    });
 
     const handleFilterToggle = (filterCategory: string, value: string) => {
         setFilters((prevFilters) => {
@@ -411,9 +422,13 @@ export const Cars = () => {
             return updatedFilters;
         });
     };
-    const handleChangePrice = (event: Event, newValue: number | number[]) => {
-        setPrice(newValue as number[]);
+    const handleChangePrice = (_event: any, newValue: any) => {
+        if (Array.isArray(newValue)) {
+            const [minPrice, maxPrice] = newValue.map((val) => (val === "" ? undefined : val));
+            setPrice({ minPrice, maxPrice });
+        }
     };
+
     const filterCars = (car: ICar): boolean => {
         return (
             (!filters.carType.length || filters.carType.includes(car.type)) &&
@@ -423,31 +438,23 @@ export const Cars = () => {
         );
     };
     const handleChangeMinPrice = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const newPrice: number[] = [...price];
-        newPrice[0] = Number(event.target.value);
-        setPrice(newPrice);
+        setPrice({ minPrice: Number(event.target.value), maxPrice: price.maxPrice });
     };
     const handleChangeMaxPrice = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const newPrice: number[] = [...price];
-        newPrice[1] = Number(event.target.value);
-        setPrice(newPrice);
+        setPrice({ minPrice: price.maxPrice, maxPrice: Number(event.target.value) });
     };
 
     const handleBlur = () => {
-        if (price[0] < 0) {
-            const newPrice = [...price];
-            newPrice[0] = 0;
-            setPrice([...newPrice]);
-        } else if (price[1] > 250) {
-            const newPrice = [...price];
-            newPrice[1] = 250;
-            setPrice([...newPrice]);
+        if (price.minPrice < _MIN_PRICE) {
+            setPrice({ minPrice: _MIN_PRICE, maxPrice: price.maxPrice });
+        } else if (price.maxPrice < _MAX_PRICE) {
+            setPrice({ minPrice: price.minPrice, maxPrice: _MAX_PRICE });
         }
     };
 
     return (
         <div className="flex flex-wrap justify-center w-full h-full">
-            <div className="text-white md:w-[300px] bg-gray-700 items-start  md:m-4 md:mr-0 h-fit rounded-xl overflow-auto w-full mx-10 mt-4 z-0 font">
+            <div className="md:w-[300px] bg-slate-700 items-start  md:m-4 md:mr-0 h-fit rounded-xl overflow-auto w-full mx-10 mt-4 z-0 font text-slate-200">
                 <h1 className="text-center mt-5 font-bold">Filters</h1>
                 <div className="px-4">
                     <div content="Car Types">
@@ -522,7 +529,7 @@ export const Cars = () => {
                                         getAriaLabel={() => "Price range"}
                                         min={10}
                                         max={250}
-                                        value={price}
+                                        value={[price.minPrice, price.maxPrice]}
                                         onChange={handleChangePrice}
                                         valueLabelDisplay="auto"
                                     />
@@ -532,7 +539,7 @@ export const Cars = () => {
                             <div className="flex justify-evenly w-full pb-4">
                                 <span className="pr-2">Min Price:</span>
                                 <Input
-                                    value={price[0]}
+                                    value={price.minPrice}
                                     onChange={handleChangeMinPrice}
                                     className="border-[1px] px-4"
                                     inputProps={{
@@ -542,7 +549,7 @@ export const Cars = () => {
                                 />
                                 <span className="px-2">Max price:</span>
                                 <Input
-                                    value={price[1]}
+                                    value={price.maxPrice}
                                     className="border-[1px] px-4"
                                     onChange={handleChangeMaxPrice}
                                     onBlur={handleBlur}
@@ -572,12 +579,31 @@ export const Cars = () => {
                             </FormControl>
                         </Box>
                     </div>
+                    <div content="Reset" className="pb-4 flex justify-center">
+                        <Button
+                            variant="contained"
+                            className="!bg-green-600"
+                            onClick={() => {
+                                setFilters({
+                                    carType: [],
+                                    transmissionType: [],
+                                    fuelType: [],
+                                    sale: [],
+                                });
+                                console.log(_MIN_PRICE);
+                                setPrice({ minPrice: _MIN_PRICE, maxPrice: _MAX_PRICE });
+                                setSelectedSort("default");
+                            }}
+                        >
+                            Reset all filters!
+                        </Button>
+                    </div>
                 </div>
             </div>
             <div className="w-full items-center grid h-full max-w-[1000px] grid-flow-row xl:grid-cols-3 justify-center">
                 {cars
                     .filter(filterCars)
-                    .filter((car) => Number(car.price) >= price[0] && Number(car.price) <= price[1])
+                    .filter((car) => getPrice(car) >= price.minPrice && getPrice(car) <= price.maxPrice)
                     .sort(sortFunction)
                     .map((car, index) => (
                         <CarItem
