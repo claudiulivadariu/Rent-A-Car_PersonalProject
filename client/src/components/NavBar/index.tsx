@@ -18,8 +18,14 @@ const Navbar = () => {
     ];
 
     return (
-        <div className="bg-slate-800 flex md:justify-evenly justify-between items-center h-16 mx-auto px-4 text-white w-full">
-            <img src={logo} className="w-30 h-8"></img>
+        <div className="bg-slate-800 flex md:justify-evenly justify-between items-center h-16 mx-auto px-4 text-white w-full border-b-[1px] mb-2">
+            <img
+                src={logo}
+                className="w-32 ml-5 cursor-pointer"
+                onClick={() => {
+                    navigate("/home");
+                }}
+            ></img>
             <ul className="hidden md:flex">
                 {navItems.map((item) => (
                     <li

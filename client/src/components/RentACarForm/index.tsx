@@ -127,6 +127,9 @@ function RentACarForm() {
                     <FormControlLabel
                         control={<Checkbox checked={useSameLocation} onChange={handleCheckboxChange} />}
                         label="Use same location for drop-off"
+                        componentsProps={{
+                            typography: { sx: { fontSize: '15px' } }  // Adjust the font size as needed
+                        }}
                     />
                 </Grid>
                 <Grid item xs={12}>
@@ -176,7 +179,7 @@ function RentACarForm() {
                             />
                         }
                         className={`${showWarning ? classes.warning : ""}`}
-                        label= {showWarning ? "I am over 18 years old*": "I am over 18 years old"}
+                        label={showWarning ? "I am over 18 years old*" : "I am over 18 years old"}
                     />
                 </Grid>
                 <Grid item xs={12}>
