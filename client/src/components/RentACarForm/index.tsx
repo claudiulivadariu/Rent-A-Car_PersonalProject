@@ -11,7 +11,7 @@ import {
     FormControlLabel,
     Checkbox,
 } from "@mui/material";
-
+import { makeStyles } from "@mui/styles";
 const locations = [
     { value: "iasi_airport", label: "Iasi, Airport" },
     { value: "iasi_palas_mall", label: "Iasi, Palas Mall" },
@@ -19,6 +19,35 @@ const locations = [
 ];
 
 const carTypes = ["Any", "Small", "Family", "VIP", "Super Car"];
+
+const useStyles = makeStyles(() => ({
+    warning: {
+        color: "red",
+        animation: "$shake 0.5s",
+    },
+    "@keyframes shake": {
+        "0%": { transform: "translateX(0)" },
+        "20%": { transform: "translateX(-3px)" },
+        "40%": { transform: "translateX(3px)" },
+        "60%": { transform: "translateX(-3px)" },
+        "80%": { transform: "translateX(3px)" },
+        "100%": { transform: "translateX(0)" },
+    },
+}));
+export class Form {
+    pickUpLocation: string;
+    dropOffLocation: string;
+    carType: string;
+    pickUpDate: string;
+    dropOffDate: string;
+    constructor(pickLoc: string, dropLoc: string, car: string, pickDate: string, dropDate: string) {
+        this.pickUpLocation = pickLoc;
+        this.dropOffLocation = dropLoc;
+        this.carType = car;
+        this.pickUpDate = pickDate;
+        this.dropOffDate = dropDate;
+    }
+}
 
 function RentACarForm() {
     const [pickupLocation, setPickupLocation] = useState("");
@@ -29,7 +58,8 @@ function RentACarForm() {
     const [dropOffDate, setDropOffDate] = useState(
         new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000).toISOString().split("T")[0]
     );
-    const [driverAge, setDriverAge] = useState("");
+    const [isAdult, setIsAdult] = useState(false);
+    const [showWarning, setShowWarning] = useState(false); // State for showing the warning
 
     const handleCheckboxChange = (event: any) => {
         setUseSameLocation(event.target.checked);
@@ -37,15 +67,22 @@ function RentACarForm() {
             setDropOffLocation(pickupLocation);
         }
     };
+    const classes = useStyles();
 
     useEffect(() => {
         if (useSameLocation === true) {
             setDropOffLocation(pickupLocation);
         }
-    }, [pickupLocation,useSameLocation]);
+    }, [pickupLocation, useSameLocation]);
 
     const handleSubmit = (event: any) => {
         event.preventDefault();
+        if (!isAdult) {
+            setShowWarning(true);
+        } else {
+            const form = new Form(pickupLocation, dropOffLocation, carType, pickupDate, dropOffDate);
+            console.log(form);
+        }
     };
 
     return (
@@ -128,17 +165,23 @@ function RentACarForm() {
                     />
                 </Grid>
                 <Grid item xs={12}>
-                    <TextField
-                        type="number"
-                        value={driverAge}
-                        onChange={(e) => setDriverAge(e.target.value)}
-                        fullWidth
-                        label="Driver's Age"
+                    <FormControlLabel
+                        control={
+                            <Checkbox
+                                checked={isAdult}
+                                onChange={(event) => {
+                                    setShowWarning(false);
+                                    setIsAdult(event.target.checked);
+                                }}
+                            />
+                        }
+                        className={`${showWarning ? classes.warning : ""}`}
+                        label= {showWarning ? "I am over 18 years old*": "I am over 18 years old"}
                     />
                 </Grid>
                 <Grid item xs={12}>
                     <Button type="submit" variant="contained" fullWidth>
-                        Submit
+                        Check our offers!
                     </Button>
                 </Grid>
             </Grid>
