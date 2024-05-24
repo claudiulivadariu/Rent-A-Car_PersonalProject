@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ICar } from "../../components/CarItem";
 import { CarItem } from "../../components/CarItem";
 import { useLocation } from "react-router-dom";
@@ -21,6 +21,13 @@ export const Cars = () => {
         fuelType: [],
         sale: [],
     });
+
+    const { pathname } = useLocation();
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [pathname]);
+
     const sortFunction = (a: ICar, b: ICar) => {
         if (selectedSort === "default") return 0;
         else if (selectedSort === "price") {
@@ -49,9 +56,9 @@ export const Cars = () => {
 
     return (
         <div className="flex flex-wrap justify-center w-full h-full">
-            <Filters 
+            <Filters
                 filtersContext={[filters, setFilters]}
-                priceContext={[price,setPrice]}
+                priceContext={[price, setPrice]}
                 sortContext={[selectedSort, setSelectedSort]}
                 priceLimitContext={[_MIN_PRICE, _MAX_PRICE]}
             />
